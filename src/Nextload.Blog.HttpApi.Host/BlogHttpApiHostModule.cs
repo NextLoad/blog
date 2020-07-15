@@ -1,5 +1,10 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using Nextload.Blog.Services;
+using System;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.Autofac;
@@ -19,7 +24,27 @@ namespace Nextload.Blog
     {
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
-            base.ConfigureServices(context);
+            context.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.FromSeconds(20),
+                        ValidateIssuerSigningKey = true,
+                        ValidAudience = AppSettings.JwtSettings.Domain,
+                        ValidIssuer = AppSettings.JwtSettings.Domain,
+                        IssuerSigningKey = new SymmetricSecurityKey(AppSettings.JwtSettings.SecurityKey.GetBytes())
+                    };
+                });
+
+            context.Services.AddAuthorization();
+
+            context.Services.AddHttpClient();
+
+            context.Services.AddTransient<IAuthorizeService, GithubAuthorzieService>();
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
@@ -36,6 +61,10 @@ namespace Nextload.Blog
 
             // 路由
             app.UseRouting();
+
+            app.UseAuthentication();
+
+            app.UseAuthorization();
 
             // 路由映射
             app.UseEndpoints(endpoints =>

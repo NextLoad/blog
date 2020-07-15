@@ -24,6 +24,11 @@
             ConnectionStrings
             </summary>
         </member>
+        <member name="P:Nextload.Blog.AppSettings.ApiVersion">
+            <summary>
+            apiversion
+            </summary>
+        </member>
         <member name="M:Nextload.Blog.IRepositories.IPostTagRepository.BulkInsertAsync(System.Collections.Generic.IEnumerable{Nextload.Blog.PostTag})">
             <summary>
             批量插入

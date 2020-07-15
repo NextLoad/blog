@@ -1,14 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Mvc;
 
 namespace Nextload.Blog.Controllers
 {
+    [Authorize]
+    [ApiExplorerSettings(GroupName = Grouping.GroupName_Front)]
     [ApiController]
-    [Route("Category")]
+    [Route("category")]
     public class CategoryController : AbpController
     {
         private readonly ICategoryService _categoryService;
@@ -38,7 +38,7 @@ namespace Nextload.Blog.Controllers
         [HttpPut]
         public async Task<bool> UpdateCategoryAsync(int id, CategoryDto categoryDto)
         {
-            return await _categoryService.UpdateCategoryAsync(id,categoryDto);
+            return await _categoryService.UpdateCategoryAsync(id, categoryDto);
         }
 
         /// <summary>

@@ -49,5 +49,25 @@
             创建时间
             </summary>
         </member>
+        <member name="M:Nextload.Blog.IAuthorizeService.GetLoginAddressAsync">
+            <summary>
+            获取登录地址
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Nextload.Blog.IAuthorizeService.GetAccessTokenAsync(System.String)">
+            <summary>
+            获取Access token
+            </summary>
+            <param name="code"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Nextload.Blog.IAuthorizeService.GenerateTokenAsync(System.String)">
+            <summary>
+            生成token
+            </summary>
+            <param name="accessToken"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

@@ -1,14 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Nextload.Blog.IServices;
 using Nextload.Blog.ToolKits;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Mvc;
 
 namespace Nextload.Blog.Controllers
 {
+    [Authorize]
+    [ApiExplorerSettings(GroupName = Grouping.GroupName_Front)]
     [ApiController]
     [Route("blog")]
     public class PostController : AbpController
